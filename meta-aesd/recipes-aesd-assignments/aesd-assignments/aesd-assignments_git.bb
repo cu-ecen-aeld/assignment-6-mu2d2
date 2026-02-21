@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 # TODO: Set this  with the path to your assignments rep.  Use ssh protocol and see lecture notes
 # about how to setup ssh-agent for passwordless access
-SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-mu2d2.git;protocol=ssh;branch=master"
+SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-mu2d2.git;protocol=ssh;branch=main"
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
@@ -28,8 +28,9 @@ TARGET_LDFLAGS += "-pthread -lrt"
 inherit update-rc.d
 
 INITSCRIPT_PACKAGES = "${PN}"
-
-INITSCRIPT_PACKAGES:${PN} = "aesdsocket-start-stop.sh"
+INITSCRIPT_NAME = "aesdsocket"
+INITSCRIPT_PARAMS = "defaults 90"
+#INITSCRIPT_PACKAGES:${PN} = "aesdsocket-start-stop.sh"
 
 do_configure () {
 	:
@@ -51,5 +52,5 @@ do_install () {
 	install -m 0755 ${S}/aesdsocket ${D}${bindir}/aesdsocket
 
 	install -d ${D}${sysconfdir}/init.d
-	install -m 0755 ${S}/aesdsocket-start-stop.sh ${D}${sysconfdir}/init.d
+	install -m 0755 ${S}/aesdsocket-start-stop.sh ${D}${sysconfdir}/init.d/aesdsocket
 }
